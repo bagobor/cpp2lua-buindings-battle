@@ -25,3 +25,6 @@
 [submodule "bechmark/nonius"]
 	path = bechmark/nonius
 	url = https://github.com/rmartinho/nonius.git
+[submodule "external/boost"]
+	path = external/boost
+	url = https://github.com/bagobor/boost.git
