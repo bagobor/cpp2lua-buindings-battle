@@ -1,12 +1,27 @@
-[submodule "bechmark/selene"]
-	path = bechmark/selene
-	url = https://github.com/jeremyong/Selene
-[submodule "luacxx"]
-	path = luacxx
-	url = https://github.com/dafrito/luacxx
-[submodule "bechmark/luacxx"]
-	path = bechmark/luacxx
-	url = https://github.com/dafrito/luacxx
 [submodule "external/Selene"]
 	path = external/Selene
 	url = https://github.com/jeremyong/Selene
+[submodule "external/luacxx"]
+	path = external/luacxx
+	url = https://github.com/dafrito/luacxx
+[submodule "external/lua-intf"]
+	path = external/lua-intf
+	url = https://github.com/SteveKChiu/lua-intf
+[submodule "external/LuaState"]
+	path = external/LuaState
+	url = https://github.com/AdUki/LuaState
+[submodule "external/sol"]
+	path = external/sol
+	url = https://github.com/Rapptz/sol
+[submodule "external/luapath"]
+	path = external/luapath
+	url = https://github.com/guwere/luapath
+[submodule "external/lua-api-pp"]
+	path = external/lua-api-pp
+	url = https://github.com/OldFisher/lua-api-pp
+[submodule "external/luawrapper"]
+	path = external/luawrapper
+	url = https://github.com/tomaka/luawrapper
+[submodule "bechmark/nonius"]
+	path = bechmark/nonius
+	url = https://github.com/rmartinho/nonius.git
