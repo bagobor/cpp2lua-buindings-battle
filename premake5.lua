@@ -72,7 +72,22 @@ project "bechmark"
    language "C++"
    targetdir (BUILD_DIR .. "/%{cfg.buildcfg}")
 
-   includedirs  {"./external/boost/", "./bechmark/nonius/include/"}
+   defines { "LUAPP_HEADER_ONLY" }   
+
+   includedirs  {
+      "./external/lua-api-pp/",
+      "./external/luacxx/src/",
+      "./external/lua-intf/LuaIntf/",
+      "./external/luapath/include/",
+      "./external/LuaState/include/",
+      "./external/luawrapper/include/",
+      "./external/Selene/include/",
+      "./external/sol/",
+      "./external/lua/src/",
+      "./external/boost/", 
+      "./bechmark/nonius/include/"
+   }
+   
    libdirs { BUILD_DIR .. "/lib/%{cfg.buildcfg}" }   
 
    links { "liblua" }
