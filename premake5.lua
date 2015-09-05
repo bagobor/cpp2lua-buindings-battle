@@ -1,6 +1,6 @@
 -- premake5.lua
 
-local BUILD_DIR = ("build_" .. _ACTION)
+local BUILD_DIR = (".build/" .. _ACTION)
 
 workspace "cpp2lua-bechmarks"
    configurations { "Debug", "Release" }
@@ -36,7 +36,7 @@ workspace "cpp2lua-bechmarks"
 
 project "liblua"
    kind "StaticLib"
-   location (BUILD_DIR .. "/liblua")
+   location (BUILD_DIR .. "/lua")
    language "C"
    targetdir (BUILD_DIR .. "/lib/%{cfg.buildcfg}")
 
@@ -46,6 +46,25 @@ project "liblua"
    files { "./external/lua/src/**.c", "./external/lua/src/**.h" }
    removefiles {"**luac.c", "**lua.c"}
 
+project "lua"   
+   kind "ConsoleApp"
+   location (BUILD_DIR .. "/lua")
+   language "C"
+   targetdir (BUILD_DIR .. "/%{cfg.buildcfg}")
+   includedirs  {"./external/lua/src/"}
+   files {"./external/lua/src/lua.c"}
+   libdirs { BUILD_DIR .. "/lib/%{cfg.buildcfg}" }
+   links { "liblua" }
+
+project "luac"   
+   kind "ConsoleApp"
+   location (BUILD_DIR .. "/lua")
+   language "C"
+   targetdir (BUILD_DIR .. "/%{cfg.buildcfg}")
+   includedirs  {"./external/lua/src/"}
+   files {"./external/lua/src/luac.c"}
+   libdirs { BUILD_DIR .. "/lib/%{cfg.buildcfg}" }
+   links { "liblua" }
 
 project "bechmark"
    kind "ConsoleApp"
