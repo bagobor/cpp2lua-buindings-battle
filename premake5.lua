@@ -34,6 +34,19 @@ workspace "cpp2lua-bechmarks"
 -- filter "files:**.png"
 --   buildaction "Embed" -- Embed the file into the target binary as a resource.
 
+project "liblua"
+   kind "StaticLib"
+   location (BUILD_DIR .. "/liblua")
+   language "C"
+   targetdir (BUILD_DIR .. "/lib/%{cfg.buildcfg}")
+
+   includedirs  {"./external/lua/src/"}
+--libdirs { "../lua/libs", "../zlib" }   
+
+   files { "./external/lua/src/**.c", "./external/lua/src/**.h" }
+   removefiles {"**luac.c", "**lua.c"}
+
+
 project "bechmark"
    kind "ConsoleApp"
    location (BUILD_DIR .. "/bechmark")
@@ -41,7 +54,9 @@ project "bechmark"
    targetdir (BUILD_DIR .. "/%{cfg.buildcfg}")
 
    includedirs  {"./external/boost/", "./bechmark/nonius/include/"}
---libdirs { "../lua/libs", "../zlib" }   
+   libdirs { BUILD_DIR .. "/lib/%{cfg.buildcfg}" }   
 
-   files { "./bechmark/**.h", "./bechmark/**.cpp" }
+   links { "liblua" }
+
+   files { "./bechmark/**.h", "./bechmark/**.h++", "./bechmark/**.cpp" }
 

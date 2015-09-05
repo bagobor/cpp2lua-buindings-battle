@@ -3,7 +3,7 @@
 // #include <iterator>
 // #include <string>
 
-// int main() {
+//int main() {
 //     nonius::configuration cfg;
 //     nonius::benchmark_registry benchmarks = {
 //         nonius::benchmark("to_string(42)", []{ return std::to_string(42); }),
@@ -11,9 +11,9 @@
 //     };
 
 //     nonius::go(cfg, benchmarks);
-// }
+//}
 #define NONIUS_RUNNER
-#include <nonius/nonius.h++>
+#include <nonius/nonius_single.h++>
 
 #include <list>
 #include <forward_list>
