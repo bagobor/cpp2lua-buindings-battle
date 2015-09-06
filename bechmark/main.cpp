@@ -37,6 +37,27 @@ namespace bench_cfunction_from_lua {
 		return value + 1;
 	}
 
+	int plain_lua_test_wrapper(lua_State *L) {
+		int n = lua_gettop(L);
+
+		if (n != 1) {
+			lua_pushstring(L, "Incorrect number of arguments'");
+			lua_error(L);
+			return 0;
+		}
+
+		if (!lua_isnumber(L, 1)) {
+			lua_pushstring(L, "Incorrect argument to 'test'");
+			lua_error(L);
+			return 0;
+		}
+
+		int value = lua_tonumber(L, 1);
+		int result = test(value);
+		lua_pushnumber(L, result);
+		return 1;
+	}
+
 	//namespace luawrapper {
 		//#include <LuaContext.hpp>
 	//	int exec() {
@@ -76,7 +97,8 @@ namespace bench_cfunction_from_lua {
 		//	//.addFunction("xpairs", &xpairs)
 		//.endModule();
 
-		//std::string script = 
+		auto plain_L = luaL_newstate();
+		lua_register(plain_L, "test", &plain_lua_test_wrapper);
 
 		nonius::benchmark benchmarks[] = {
 			nonius::benchmark("selene", [&sel_state] {
@@ -96,6 +118,22 @@ namespace bench_cfunction_from_lua {
 
 				return result;
 			})
+			, nonius::benchmark("plain_c", [plain_L] {
+				int result = 0;
+				auto L = plain_L;
+				for (size_t i = 0; i < 100000; ++i) {
+					// the function name
+					lua_getglobal(L, "test");
+					// the argument 
+					lua_pushnumber(L, 42);
+					// call the function with 2	arguments, return 1 result 
+					lua_call(L, 1, 1);
+					int lua_out = (int)lua_tonumber(L, -1);
+					lua_pop(L, 1);
+					result += lua_out;
+				}
+				return result;
+			})
 			//,nonius::benchmark("sol", [&sol_lua] {
 			//	int result = 0;
 			//	for (size_t i = 0; i < 1000; ++i) {
@@ -105,9 +143,12 @@ namespace bench_cfunction_from_lua {
 			//	}
 			//	return result;
 			//})
+
 		};
 
 		nonius::go(cfg, std::begin(benchmarks), std::end(benchmarks), nonius::html_reporter());
+
+		lua_close(plain_L);
 	}
 
 }
