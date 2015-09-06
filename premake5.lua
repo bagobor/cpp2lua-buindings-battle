@@ -46,6 +46,18 @@ project "liblua"
    files { "./external/lua/src/**.c", "./external/lua/src/**.h" }
    removefiles {"**luac.c", "**lua.c"}
 
+project "luabind-deboostified"
+   kind "StaticLib"
+   location (BUILD_DIR .. "/luabind-deboostified")
+   language "C++"
+   targetdir (BUILD_DIR .. "/lib/%{cfg.buildcfg}")
+
+   includedirs  {"./external/lua/src/", "./external/luabind-deboostified/"}
+--libdirs { "../lua/libs", "../zlib" }   
+
+   files { "./external/luabind-deboostified/src/**.cpp", "./external/luabind-deboostified/luabind/**.hpp" }
+
+
 project "lua"   
    kind "ConsoleApp"
    location (BUILD_DIR .. "/lua")
@@ -85,12 +97,13 @@ project "bechmark"
       "./external/sol/",
       "./external/lua/src/",
       "./external/boost/", 
-      "./bechmark/nonius/include/"
+      "./bechmark/nonius/include/",
+      "./external/luabind-deboostified/"
    }
    
    libdirs { BUILD_DIR .. "/lib/%{cfg.buildcfg}" }   
 
-   links { "liblua" }
+   links { "liblua",  "luabind-deboostified"}
 
    files { "./bechmark/**.h", "./bechmark/**.h++", "./bechmark/**.cpp" }
 

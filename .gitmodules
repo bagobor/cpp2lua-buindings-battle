@@ -31,3 +31,6 @@
 [submodule "external/lua"]
 	path = external/lua
 	url = https://github.com/lua/lua
+[submodule "external/luabind-deboostified"]
+	path = external/luabind-deboostified
+	url = https://github.com/Wohlhabend-Networks/luabind-deboostified.git
