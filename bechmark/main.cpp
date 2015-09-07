@@ -131,8 +131,9 @@ namespace bench_cfunction_from_lua {
 			})
 			,nonius::benchmark("luaintf", [&luaintf] {
 				int result = 0;
-				LuaIntf::LuaRef func(luaintf.state(), "luaintf.test");
+				
 				for (size_t i = 0; i < NUM_ITERATIONS; ++i) {
+					LuaIntf::LuaRef func(luaintf.state(), "luaintf.test");
 					int rv = func.call<int, int>(42);
 					//func(42);
 					result += rv;
