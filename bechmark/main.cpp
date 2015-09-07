@@ -78,7 +78,7 @@ namespace bench_cfunction_from_lua {
 		cfg.samples = 10;
 		//double confidence_interval = 0.95;
 		//int resamples = 100000;
-		cfg.title = "cfunction_from_lua x 100000";
+		cfg.title = "cfunction_from_lua x 100000 x iteration";
 
 		cfg.list_benchmarks = true;
 		cfg.summary = true;
@@ -125,35 +125,41 @@ namespace bench_cfunction_from_lua {
 		nonius::benchmark benchmarks[] = {
 			nonius::benchmark("selene", [&sel_state] {
 				int result = 0;
-				for (size_t i = 0; i < NUM_ITERATIONS; ++i)
+				static size_t iteration_index = 1;
+				for (size_t i = 0, end = NUM_ITERATIONS*iteration_index; i < end; ++i) {
 					result += (int)sel_state["test"](42);
+				}
+				++iteration_index;
 				return result;
 			})
 			,nonius::benchmark("luaintf", [&luaintf] {
-				int result = 0;
-				
-				for (size_t i = 0; i < NUM_ITERATIONS; ++i) {
+				int result = 0;				
+				static size_t iteration_index = 1;
+				for (size_t i = 0, end = NUM_ITERATIONS*iteration_index; i < end; ++i) {
 					LuaIntf::LuaRef func(luaintf.state(), "luaintf.test");
 					int rv = func.call<int, int>(42);
 					//func(42);
 					result += rv;
 				}
-
+				++iteration_index;
 				return result;
 			})
 			,
 			nonius::benchmark("luabind", [luabind_L] {
 				int result = 0;
-				for (size_t i = 0; i < NUM_ITERATIONS; ++i) {
+				static size_t iteration_index = 1;
+				for (size_t i = 0, end = NUM_ITERATIONS*iteration_index; i < end; ++i) {
 					int rv = luabind::call_function<int>(luabind_L, "test", 42);
 					result += rv;
 				}
+				++iteration_index;
 				return result;
 			})
 			, nonius::benchmark("plain_c", [plain_L] {
 				int result = 0;
 				auto L = plain_L;
-				for (size_t i = 0; i < NUM_ITERATIONS; ++i) {
+				static size_t iteration_index = 1;
+				for (size_t i = 0, end = NUM_ITERATIONS*iteration_index; i < end; ++i) {
 					// the function name
 					lua_getglobal(L, "test");
 					// the argument 
@@ -164,6 +170,7 @@ namespace bench_cfunction_from_lua {
 					lua_pop(L, 1);
 					result += lua_out;
 				}
+				++iteration_index;
 				return result;
 			})
 			//,nonius::benchmark("sol", [&sol_lua] {
