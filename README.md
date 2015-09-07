@@ -13,7 +13,7 @@ Notes:
 - ~~luapp, https://github.com/OldFisher/lua-api-pp - build failed under Visual Studio 2015~~
 - ~~LuaContext - build failed under Visual Studio 2015 It uses boost and looks like it conflicts with latest version.~~
  
-##[**Results:(draft)**](https://raw.githubusercontent.com/bagobor/cpp2lua-buindings-battle/master/results/cfunction_from_lua.html)
+##Results:(draft):
 ![c_function_from_lua](https://raw.githubusercontent.com/bagobor/cpp2lua-buindings-battle/master/results/cfunction_from_lua.png)
 
 Status:
