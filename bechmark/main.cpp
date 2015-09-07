@@ -74,6 +74,8 @@ namespace bench_cfunction_from_lua {
 	void run() {
 		nonius::configuration cfg;
 		cfg.output_file = "cfunction_from_lua.html";
+		cfg.sub_title = "generated with <em>misused</em>  <a href = \"http://flamingdangerzone.com/nonius\"> nonius </a>";
+		cfg.graph_type = nonius::configuration::line;
 
 		cfg.samples = 10;
 		//double confidence_interval = 0.95;
