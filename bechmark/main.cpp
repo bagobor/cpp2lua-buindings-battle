@@ -19,7 +19,8 @@ extern "C"
 #include <LuaIntf.h>
 
 #include <luabind/luabind.hpp>
-//#include "LuaIntf/LuaIntf.h"
+#include <sol.hpp>
+
 //#include <impl/CppBindModule.h>
 
 //#include <luapp/lua.hpp>
@@ -87,8 +88,8 @@ namespace bench_cfunction_from_lua {
 
 
 
-		//sol::state sol_lua;
-		//sol_lua.set_function(std::string("test"), &test);
+		sol::state sol_lua;
+		sol_lua.set_function(std::string("test"), &test);
 
 		//auto LuaIntf = luaL_newstate();
 		////LuaBinding(L).beginModule("utils")
@@ -216,15 +217,26 @@ namespace bench_cfunction_from_lua {
 				++iteration_index;
 				return result;
 			})
-			//,nonius::benchmark("sol", [&sol_lua] {
-			//	int result = 0;
-			//	for (size_t i = 0; i < 1000; ++i) {
-			//		//sol_lua.script("test()");
-			//		//auto test_lua_func = sol_lua.get<sol::function>("test");
-			//		//result += (int)(sol_lua<sol::function>("test")(42));
-			//	}
-			//	return result;
-			//})
+			,nonius::benchmark("sol_1.1.0", [&sol_lua] {
+				int result = 0;
+				static size_t iteration_index = 1;
+				for (size_t i = 0, end = NUM_ITERATIONS*iteration_index; i < end; ++i) {
+					sol::function test = sol_lua["test"];
+					result += test.call<int>(42);
+				}
+				++iteration_index;
+				return result;
+			})
+			, nonius::benchmark("sol_1.1.0_cached", [&sol_lua] {
+				int result = 0;
+				sol::function test = sol_lua["test"];
+				static size_t iteration_index = 1;
+				for (size_t i = 0, end = NUM_ITERATIONS*iteration_index; i < end; ++i) {
+					result += test.call<int>(42);
+				}
+				++iteration_index;
+				return result;
+			})
 
 		};
 
