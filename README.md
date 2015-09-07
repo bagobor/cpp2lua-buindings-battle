@@ -4,7 +4,7 @@ Notes:
 - Selene, https://github.com/jeremyong/Selene, header oonly
 - lua-intf, https://github.com/SteveKChiu/lua-intf header only is an option
 - Luabind, 
-- Luabind-deboostyfied, 
+- Luabind-deboostyfied, https://github.com/Wohlhabend-Networks/luabind-deboostified
 - luacxx, https://github.com/dafrito/luacxx
 - LuaState, https://github.com/AdUki/LuaState
 - luapath, https://github.com/guwere/luapath
