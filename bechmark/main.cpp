@@ -79,6 +79,8 @@ namespace bench_cfunction_from_lua {
 		cfg.graph_type = nonius::configuration::line;
 
 		cfg.samples = 10;
+		cfg.verbose = true;
+		cfg.summary = true;
 		//double confidence_interval = 0.95;
 		//int resamples = 100000;
 		cfg.title = "cfunction_from_lua x 100000 x iteration";
@@ -100,6 +102,11 @@ namespace bench_cfunction_from_lua {
 		// Selene
 		sel::State sel_state(true);
 		sel_state["test"] = &test;
+		for (size_t i = 0; i < 10000; ++i) {
+			static char buff[128];
+			sprintf(buff, "%s%d", "test", (unsigned int)i);
+			sel_state[buff] = &test;
+		}
 	
 		// LuaIntf
 		LuaIntf::LuaContext luaintf(true);
