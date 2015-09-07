@@ -123,11 +123,32 @@ namespace bench_cfunction_from_lua {
 		}
 
 		nonius::benchmark benchmarks[] = {
-			nonius::benchmark("selene", [&sel_state] {
+			nonius::benchmark("selene_cache", [&sel_state] {
+				int result = 0;
+				static size_t iteration_index = 1;
+				auto func = sel_state["test"];
+				for (size_t i = 0, end = NUM_ITERATIONS*iteration_index; i < end; ++i) {
+					result += (int)func(42);
+				}
+				++iteration_index;
+				return result;
+			})
+			,nonius::benchmark("selene", [&sel_state] {
 				int result = 0;
 				static size_t iteration_index = 1;
 				for (size_t i = 0, end = NUM_ITERATIONS*iteration_index; i < end; ++i) {
 					result += (int)sel_state["test"](42);
+				}
+				++iteration_index;
+				return result;
+			})
+			,nonius::benchmark("luaintf_cache", [&luaintf] {
+				int result = 0;
+				static size_t iteration_index = 1;
+				LuaIntf::LuaRef func(luaintf.state(), "luaintf.test");
+				for (size_t i = 0, end = NUM_ITERATIONS*iteration_index; i < end; ++i) {					
+					int rv = func.call<int, int>(42);
+					result += rv;
 				}
 				++iteration_index;
 				return result;
@@ -138,18 +159,38 @@ namespace bench_cfunction_from_lua {
 				for (size_t i = 0, end = NUM_ITERATIONS*iteration_index; i < end; ++i) {
 					LuaIntf::LuaRef func(luaintf.state(), "luaintf.test");
 					int rv = func.call<int, int>(42);
-					//func(42);
 					result += rv;
 				}
 				++iteration_index;
 				return result;
 			})
-			,
-			nonius::benchmark("luabind", [luabind_L] {
+			, nonius::benchmark("luabind_raw", [luabind_L] {
 				int result = 0;
 				static size_t iteration_index = 1;
 				for (size_t i = 0, end = NUM_ITERATIONS*iteration_index; i < end; ++i) {
-					int rv = luabind::call_function<int>(luabind_L, "test", 42);
+					int rv = luabind::call_function<int>(luabind_L, "test", 42);					
+					result += rv;
+				}
+				++iteration_index;
+				return result;
+			})
+			, nonius::benchmark("luabind_cache", [luabind_L] {
+				int result = 0;
+				static size_t iteration_index = 1;
+				luabind::object func = luabind::globals(luabind_L)["test"];//(42);
+				for (size_t i = 0, end = NUM_ITERATIONS*iteration_index; i < end; ++i) {
+					int rv = luabind::call_function<int>(func, 42);
+					result += rv;
+				}
+				++iteration_index;
+				return result;
+			})
+			, nonius::benchmark("luabind", [luabind_L] {
+				int result = 0;
+				static size_t iteration_index = 1;
+				for (size_t i = 0, end = NUM_ITERATIONS*iteration_index; i < end; ++i) {
+					luabind::object func = luabind::globals(luabind_L)["test"];
+					int rv = luabind::call_function<int>(func, 42);
 					result += rv;
 				}
 				++iteration_index;
