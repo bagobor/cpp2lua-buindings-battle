@@ -1,12 +1,9 @@
-#include <nonius/nonius_single.h++>
+#include "../common.h"
 
-#define LUA_COMPAT_APIINTCASTS
+namespace {
+	#include <luabind/luabind.hpp>
 
-extern "C"
-{
-#include "lua.h"
-#include "lauxlib.h"
-#include "lualib.h"
+	class luabind_woboost_benchmart : public base_benchmark {
+
+	} benchmark;
 }
-
-#include <luabind/luabind.hpp>
