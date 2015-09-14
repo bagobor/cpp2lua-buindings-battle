@@ -34,3 +34,6 @@
 [submodule "external/luabind-deboostified"]
 	path = external/luabind-deboostified
 	url = https://github.com/Wohlhabend-Networks/luabind-deboostified.git
+[submodule "external/sol_devel"]
+	path = external/sol_devel
+	url = https://github.com/ThePhD/sol.git

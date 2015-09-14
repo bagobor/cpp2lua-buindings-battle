@@ -5,6 +5,7 @@ local BUILD_DIR = (".build/" .. _ACTION)
 workspace "cpp2lua-bechmarks"
    configurations { "Debug", "Release" }
    location (BUILD_DIR)
+   startproject "bechmark"
    -- platforms { "x32", "x64" }
 
    -- filter { "platforms:x32" }
@@ -68,6 +69,17 @@ project "lua"
    libdirs { BUILD_DIR .. "/lib/%{cfg.buildcfg}" }
    links { "liblua" }
 
+project "luajit"
+   kind "StaticLib"
+   location (BUILD_DIR .. "/luajit")
+   language "C"
+   targetdir (BUILD_DIR .. "/lib/%{cfg.buildcfg}")
+
+   includedirs  {"./external/LuaJIT-2.0.4/src/"}
+
+   files { "./external/LuaJIT-2.0.4/src/ljamalg.c", "./external/lua/LuaJIT-2.0.4/**.h" }
+
+
 project "luac"   
    kind "ConsoleApp"
    location (BUILD_DIR .. "/lua")
@@ -98,7 +110,8 @@ project "bechmark"
       "./external/lua/src/",
       "./external/boost/", 
       "./bechmark/nonius/include/",
-      "./external/luabind-deboostified/"
+      "./external/luabind-deboostified/",
+      "./external/"
    }
    
    libdirs { BUILD_DIR .. "/lib/%{cfg.buildcfg}" }   

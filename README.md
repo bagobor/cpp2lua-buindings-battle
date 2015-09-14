@@ -9,7 +9,8 @@ Notes:
 - LuaState, https://github.com/AdUki/LuaState
 - luapath, https://github.com/guwere/luapath
 - luawrapper, https://github.com/tomaka/luawrapper
-- sol, https://github.com/Rapptz/sol latest version failed to build with Visual Studio 2015 (not supported?), so v0.1.1 tested
+- sol, https://github.com/Rapptz/sol tag: v0.1.1
+- sol_devel, https://github.com/Rapptz/sol.git -latest dev version
 - ~~luapp, https://github.com/OldFisher/lua-api-pp - build failed under Visual Studio 2015~~
 - ~~LuaContext - build failed under Visual Studio 2015 It uses boost and looks like it conflicts with latest version.~~
  
