@@ -5,9 +5,9 @@ Notes:
 - lua-intf, https://github.com/SteveKChiu/lua-intf header only is an option
 - Luabind, 
 - Luabind-deboostyfied, https://github.com/Wohlhabend-Networks/luabind-deboostified
-- luacxx, https://github.com/dafrito/luacxx
-- LuaState, https://github.com/AdUki/LuaState
-- luapath, https://github.com/guwere/luapath
+- ~~luacxx, https://github.com/dafrito/luacxx no support for direct functions call.~~
+- ~~LuaState, https://github.com/AdUki/LuaState no support for direct functions call.~~
+- ~~luapath, https://github.com/guwere/luapath no support for direct functions call.~~
 - luawrapper, https://github.com/tomaka/luawrapper
 - sol, https://github.com/Rapptz/sol tag: v0.1.1
 - sol_devel, https://github.com/Rapptz/sol.git -latest dev version
