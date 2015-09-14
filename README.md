@@ -1,7 +1,7 @@
 http://bagobor.github.io/cpp2lua-buindings-battle/ 
 
-#Benchmarks for Lua_to_c++ bindings:
-
+##Results:(draft):
+![c_function_from_lua](https://raw.githubusercontent.com/bagobor/cpp2lua-buindings-battle/master/results/cfunction_from_lua.png)
 
 Notes:
 - Selene, https://github.com/jeremyong/Selene, header oonly
@@ -16,16 +16,3 @@ Notes:
 - sol_devel, https://github.com/Rapptz/sol.git -latest dev version
 - ~~luapp, https://github.com/OldFisher/lua-api-pp - build failed under Visual Studio 2015~~
 - ~~LuaContext - build failed under Visual Studio 2015 It uses boost and looks like it conflicts with latest version.~~
- 
-##Results:(draft):
-![c_function_from_lua](https://raw.githubusercontent.com/bagobor/cpp2lua-buindings-battle/master/results/cfunction_from_lua.png)
-
-Status:
-- [x] Initial project structure and build setup
-- [x] Create simple benchmark
-- [x] Obtain fist result
-- [ ] Do the rest :)
-
-
-
-
