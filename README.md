@@ -1,6 +1,6 @@
 http://bagobor.github.io/cpp2lua-buindings-battle/ 
 
-##Results:(draft):
+##Results:
 ![c_function_from_lua](https://raw.githubusercontent.com/bagobor/cpp2lua-buindings-battle/master/results/cfunction_from_lua.png)
 
 Notes:
