@@ -19,6 +19,7 @@ namespace selene_benchmark {
 				++iteration_index;
 				return result;
 			}));
+
 			reg(nonius::benchmark("selene_cached", [this] {
 				auto &sel_state = this->sel_state;
 				int result = 0;

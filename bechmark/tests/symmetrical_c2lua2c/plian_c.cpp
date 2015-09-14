@@ -24,11 +24,19 @@ namespace plain_c_benchmark {
 		return 1;
 	}
 
+	int plain_lua_test_wrapper_unsafe(lua_State *L) {
+		int value = lua_tonumber(L, 1);
+		int result = benchmark_core::simple_math(value);
+		lua_pushnumber(L, result);
+		return 1;
+	}
+
 	struct benchmark : public  benchmark_core::base_bechmark {
 		
 		benchmark() {
 
 			lua_register(lua_state, "simple_math", &plain_lua_test_wrapper);
+			lua_register(lua_state, "simple_math_unsafe", &plain_lua_test_wrapper_unsafe);
 
 			reg(nonius::benchmark("plain_c", [this] {
 				int result = 0;
@@ -37,6 +45,26 @@ namespace plain_c_benchmark {
 				for (size_t i = 0, end = NUM_ITERATIONS*iteration_index; i < end; ++i) {
 					// the function name
 					lua_getglobal(L, "simple_math");
+					// the argument 
+					lua_pushnumber(L, 42);
+					// call the function with 2	arguments, return 1 result 
+					lua_call(L, 1, 1);
+					int lua_out = (int)lua_tonumber(L, -1);
+					lua_pop(L, 1);
+					result += lua_out;
+				}
+				++iteration_index;
+				return result;
+			}));
+
+			reg(nonius::benchmark("plain_c_unsafe", [this] {
+				int result = 0;
+				auto L = this->lua_state;
+				static size_t iteration_index = 1;
+
+				for (size_t i = 0, end = NUM_ITERATIONS*iteration_index; i < end; ++i) {
+					// the function name
+					lua_getglobal(L, "simple_math_unsafe");
 					// the argument 
 					lua_pushnumber(L, 42);
 					// call the function with 2	arguments, return 1 result 
